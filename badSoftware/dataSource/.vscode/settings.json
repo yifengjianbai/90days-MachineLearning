@@ -1,0 +1,12 @@
+{
+    "python.pythonPath": "E:\\anaconda\\python.exe",
+    "editor.fontSize": 18,
+    "python.linting.pylintEnabled": true,
+    "python.autoComplete.addBrackets":true,
+    "python.autoComplete.extraPaths":[
+        "E:\\anaconda\\Lib\\site-packages\\numpy",
+        "E:\\anaconda\\Lib\\site-packages\\pandas",
+        "E:\\anaconda\\Lib\\site-packages\\sklearn",
+        "E:\\anaconda\\Lib\\site-packages\\tensorflow"
+    ]
+}
