@@ -13,6 +13,7 @@ y = load_digits()['target']
 train_x,test_x,train_y,test_y = train_test_split(x,y,test_size=0.3)
 
 # 用神经网络训练，solver:lbfgs牛顿法，sgd随机梯度下降法，adam基于随机梯度下降的优化器
+# 牛顿法收敛速度比梯度下降快，但是他会求举证的逆，当矩阵维数很大的时候导致计算量非常大，所以常用户数据不大的时候
 clf = nn.MLPClassifier(solver='lbfgs')
 clf.fit(x,y)
 
