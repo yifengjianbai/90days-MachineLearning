@@ -11,36 +11,10 @@ import tensorflow as tf
 import pathlib
 
 
-#读取txt
-def getFormat(file):
-    str = ''
-    with open(file + '.txt', 'r') as file_to_read:
-        while True:
-            lines = file_to_read.readline()  # 整行读取数据
-            if not lines:
-                break
-            str = str + lines.replace('\t', ',') + '\n'
-    return str
-
-#重写txt为csv
-def writeFile(file):
-    data = getFormat(file)
-    with open(file + '.csv', 'w') as f:
-        f.write(data)
-
 #读取csv文件
 def read_file(type='train'):
-    #将txt文件转化为csv文件格式
-    writeFile('7day/dataSource/zhengqi_train')
-    writeFile('7day/dataSource/zhengqi_test')
-
-    #读取csv
-    path = pathlib.Path("7day/dataSource/zhengqi_train.csv")
-    if not path.is_file():
-        writeFile('7day/dataSource/zhengqi_train')
-        writeFile('7day/dataSource/zhengqi_test')
     if type=='train':
-        data = pd.read_csv('7day/dataSource/zhengqi_train.csv', header=0)
+        data = pd.read_csv('7day/dataSource/zhengqi_train.txt', header=0, sep='\t')
         columns = data.shape[1]
         #查看数据信息
         print(data.head())
@@ -48,7 +22,7 @@ def read_file(type='train'):
         data_y = data['target']
         return data_x,data_y
     else:
-        data = pd.read_csv('7day/dataSource/zhengqi_test.csv', header=0)
+        data = pd.read_csv('7day/dataSource/zhengqi_test.txt', header=0, sep='\t')
         columns = data.shape[1]
         #查看数据信息
         print(data.head())
@@ -74,7 +48,7 @@ def run_func(train_x,train_y,test_x,test_y=None):
     y = tf.placeholder(tf.float32,[None,1])
     # layer1 = add_layer(x,38,10,tf.nn.relu)
     # predict = add_layer(layer1,10,1)
-    l1 = tf.layers.dense(x, 100, tf.nn.relu)
+    l1 = tf.layers.dense(x, 5000, tf.nn.relu,kernel_regularizer=tf.contrib.layers.l2_regularizer(0.01))
     predict = tf.layers.dense(l1, 1)
     loss = tf.losses.mean_squared_error(y,predict)
     # loss = tf.reduce_mean(tf.reduce_sum(tf.square(y-predict), reduction_indices=[1]))
@@ -104,6 +78,7 @@ def run_func(train_x,train_y,test_x,test_y=None):
             test_y = test_y[:,np.newaxis]
             test_loss = sess.run(loss,feed_dict={x:test_x,y:test_y})
             print(test_loss)
+            print('-'*50)
             # y_ = sess.run(predict,feed_dict={x:test_x})
             # plt.scatter(test_y,y_)
             # plt.plot(test_y,test_y,color='r')

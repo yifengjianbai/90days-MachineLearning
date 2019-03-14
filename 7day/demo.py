@@ -14,7 +14,8 @@ import matplotlib.pyplot as plt
 
 def my_fit(train_x,train_y,test_x,test_y=None):
     #训练预测
-    clf = nn.MLPRegressor(hidden_layer_sizes=(40,),activation='identity',alpha=0.1)
+    #clf = nn.MLPRegressor(hidden_layer_sizes=(40,),activation='identity',alpha=0.1)
+    clf = SGDRegressor()
     clf.fit(train_x,train_y)
     predict = clf.predict(test_x)
     if test_y is not None:
@@ -51,6 +52,6 @@ def kfold_method():
         test_x,test_y = data_x[test_index],data_y[test_index]
         my_fit(train_x,train_y,test_x,test_y)
     test_xx = pd.read_csv('7day/dataSource/zhengqi_test.txt', header=0, sep='\t')
-    my_fit(test_x,test_y,test_xx)
+    my_fit(data_x,data_y,test_xx)
 
 kfold_method()
