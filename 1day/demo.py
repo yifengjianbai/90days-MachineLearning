@@ -1,5 +1,5 @@
 # 第一天数据预处理
-from sklearn.preprocessing import Imputer,minmax_scale,LabelEncoder,OneHotEncoder
+from sklearn.preprocessing import minmax_scale,LabelEncoder
 from sklearn.model_selection import train_test_split
 import pandas as pd
 

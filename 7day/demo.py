@@ -8,7 +8,7 @@ from sklearn.model_selection import train_test_split,KFold
 from sklearn.linear_model import SGDRegressor
 from sklearn.ensemble import GradientBoostingRegressor
 from sklearn import neural_network as nn
-from sklearn.decomposition import pca
+from sklearn.decomposition import PCA
 import matplotlib.pyplot as plt
 
 
@@ -20,13 +20,13 @@ def my_fit(train_x,train_y,test_x,test_y=None):
     predict = clf.predict(test_x)
     if test_y is not None:
         #打印测试结果
-        # plt.plot(test_y,test_y,linewidth=2,color='r')
-        # plt.scatter(test_y,predict)
-        # plt.xlabel('really')
-        # plt.ylabel('predict')
-        # plt.xlim((-4,4))
-        # plt.ylim((-4,4))
-        # plt.show()
+        plt.plot(test_y,test_y,linewidth=2,color='r')
+        plt.scatter(test_y,predict)
+        plt.xlabel('really')
+        plt.ylabel('predict')
+        plt.xlim((-4,4))
+        plt.ylim((-4,4))
+        plt.show()
         print(np.sum(np.square(test_y-predict))/test_y.shape[0])
     else:
         predict = pd.DataFrame(predict)
@@ -41,7 +41,7 @@ def kfold_method():
     columns = train.shape[1]
     #查看数据信息
     print(train.head())
-    data_x = np.array(train.ix[:,0:columns-1])
+    data_x = np.array(train.iloc[:,0:columns-1])
     data_y = train['target']
     #降维处理
     # pca = pca.PCA(n_components=0.95)
